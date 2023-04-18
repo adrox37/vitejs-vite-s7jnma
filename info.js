@@ -160,29 +160,10 @@ class TInfo extends LitElement {
 
   _renderView() {}
 
-  // _renderEdit() {
-  //   return html`
-  //   <t-l-form>
-  //     <div slot="header">Personal Information - Edit</div>
-  //     <form method="dialog" @submit=${this._handleSubmit}>
-  //       <p><t-input label="First Name" placeholder="First Name" required></t-input></p>
-  //       <p><t-input label="Last Name" placeholder="Last Name" required></t-input></p>
-  //       <p><t-input label="Middle Initial" placeholder="Middle Initial" required></t-input></p>
-  //       <p><t-input label="Prefix" placeholder="Prefix" required></t-input></p>
-  //       <p><t-input label="Title" placeholder="Title" required></t-input></p>
-  //       <p><t-input label="Suffix" placeholder="Suffix" required></t-input></p>
-  //     </form>
-  //     <div slot="footer">
-  //       <button>Save</button>
-  //     </div>
-  //   </t-l-form>
-  // `;
-  // }
-
   _renderEdit() {
     return html`
-    <t-l-form .contract="${config}" .value="${value}">
-    </t-l-form>
+    <t-form .contract="${config}" .value="${value}">
+    </t-form>
   `;
   }
 
