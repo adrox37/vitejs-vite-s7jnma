@@ -102,8 +102,11 @@ export class TForm extends LitElement {
 
   _fieldWrapperTemplate(field) {
     const propValue = this._getPropertyValue(field);
+    console.log('propValue', propValue);
     const set = this._createModelValueSetter(field);
+    console.log('set', set);
     const errorMsg = this.errors[field.key];
+    console.log('errorMsg', errorMsg);
     return this.renderer.renderField(
       field,
       propValue,
