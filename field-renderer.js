@@ -1,35 +1,31 @@
-import { html, nothing } from "lit"
-import { classMap } from "lit/directives/class-map.js"
-import { ifDefined } from "lit/directives/if-defined.js"
-import { repeat } from "lit/directives/repeat.js"
-//export {html, repeat, until};
+import { html, nothing } from 'lit';
+import { classMap } from 'lit/directives/class-map.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
+import { repeat } from 'lit/directives/repeat.js';
 
-/**
- * Renders a field using bootstrap 3 classes
- */
 export class FieldRenderer {
   renderField(field, value, set, errorMsg = null, model) {
-    const labelTemplate = this.labelTemplate(field)
+    const labelTemplate = this.labelTemplate(field);
 
-    const fieldTemplate = this.fieldTemplate(field, value, set, model)
+    const fieldTemplate = this.fieldTemplate(field, value, set, model);
 
-    const errorClass = { "has-error": errorMsg != null }
+    const errorClass = { 'has-error': errorMsg != null };
 
     return html`
       <div class="form-group ${classMap(errorClass)}">
         ${labelTemplate} ${fieldTemplate}
         ${this._errorMessageTemplate(errorMsg)}
       </div>
-    `
+    `;
   }
 
   labelTemplate(field) {
-    const requiredMark = field.templateOptions.required ? "*" : ""
+    const requiredMark = field.templateOptions.required ? '*' : '';
     return html`
       <label class="control-label" for="${field.key}">
         ${field.templateOptions.label} ${requiredMark}
       </label>
-    `
+    `;
   }
 
   _errorMessageTemplate(errorMsg) {
@@ -40,48 +36,48 @@ export class FieldRenderer {
             ${errorMsg}
           </span>
         </div>
-      `
+      `;
     }
-    return nothing
+    return nothing;
   }
 
   fieldTemplate(field, value, set, model) {
-    let renderFn = this.renderTextInputField
+    let renderFn = this.renderTextInputField;
 
-    if (field.type === "input") {
+    if (field.type === 'input') {
       if (
-        ["decimal", "integer", "long", "double"].indexOf(
-          field.templateOptions.type || ""
+        ['decimal', 'integer', 'long', 'double'].indexOf(
+          field.templateOptions.type || ''
         ) >= 0
       ) {
-        renderFn = this.renderNumberInputField
+        renderFn = this.renderNumberInputField;
       } else {
-        renderFn = this.renderTextInputField
+        renderFn = this.renderTextInputField;
       }
       //  } else if (field.type==='number') {
       //     renderFn = this.renderNumberInputField;
-    } else if (field.type === "checkbox") {
+    } else if (field.type === 'checkbox') {
       //@ts-ignore
-      renderFn = this.renderCheckboxField
-    } else if (field.type === "select") {
-      renderFn = this.renderSelectField
-    } else if (field.type === "datalist") {
-      renderFn = this.renderDataListField
+      renderFn = this.renderCheckboxField;
+    } else if (field.type === 'select') {
+      renderFn = this.renderSelectField;
+    } else if (field.type === 'datalist') {
+      renderFn = this.renderDataListField;
       /*} else if (field.type==='remoteselect') {
             //field.templateOptions.options= [{name: 'Name', value: '1'}, {name: 'Name 2', value: '2'}, {name: 'Name 3', value: '3'},];
             renderFn = this.renderSelectField; */
-    } else if (field.type === "date") {
-      renderFn = this.renderDateField
+    } else if (field.type === 'date') {
+      renderFn = this.renderDateField;
     } else {
       //fall back to input field
-      renderFn = this.renderTextInputField
+      renderFn = this.renderTextInputField;
     }
     //@ts-ignore
-    return renderFn.bind(this)(field, value, set, model)
+    return renderFn.bind(this)(field, value, set, model);
   }
 
   renderTextInputField(field, value, set, model) {
-    return this.renderInputField(field, value, set, "text")
+    return this.renderInputField(field, value, set, 'text');
     // return html`
     //     <input id="${field.key}"
     //       type="text"
@@ -97,7 +93,7 @@ export class FieldRenderer {
   }
 
   renderNumberInputField(field, value, set, model) {
-    return this.renderInputField(field, value, set, "number")
+    return this.renderInputField(field, value, set, 'number');
     // const setNumber = (value:unknown) => set(Number(value));
 
     // return html`
@@ -117,23 +113,23 @@ export class FieldRenderer {
   }
 
   renderInputField(field, value, set, type) {
-    let setter = set
-    let step = undefined
+    let setter = set;
+    let step = undefined;
     switch (type) {
-      case "number": {
-        setter = value => {
+      case 'number': {
+        setter = (value) => {
           if (value) {
             //Number("") becomes 0 etc
-            set(Number(value))
+            set(Number(value));
           } else {
-            set(null)
+            set(null);
           }
-        }
-        if (field.templateOptions.type === "decimal") {
+        };
+        if (field.templateOptions.type === 'decimal') {
           if (field.templateOptions.step) {
-            step = field.templateOptions.step
+            step = field.templateOptions.step;
           } else {
-            step = "any"
+            step = 'any';
           }
         }
       }
@@ -155,14 +151,14 @@ export class FieldRenderer {
               minlength="${ifDefined(field.templateOptions.minLength)}"
               maxlength="${ifDefined(field.templateOptions.maxLength)}"
               placeholder="${ifDefined(field.templateOptions.placeholder)}"
-              @input="${e => setter(e.target.value)}"
+              @input="${(e) => setter(e.target.value)}"
               ?required="${field.templateOptions.required}"
               ?disabled="${field.templateOptions.disabled}"
               ?readonly="${field.templateOptions.readonly}"
               >
             </input>
 
-            `
+            `;
   }
 
   renderCheckboxField(field, value, set, model) {
@@ -170,12 +166,12 @@ export class FieldRenderer {
             <input
                 type="checkbox"
                 id="${field.key}"
-                @change="${e => set(e.target.checked)}"
+                @change="${(e) => set(e.target.checked)}"
                 ?checked="${value}"
                 ?disabled="${field.templateOptions.disabled}"
                 ?readonly="${field.templateOptions.readonly}"
                 >
-            </input>`
+            </input>`;
   }
 
   renderDateField(field, value, set, model) {
@@ -198,30 +194,30 @@ export class FieldRenderer {
             <input id="${field.key}" class="form-control"
                 type="date"
                 .value="${value}"
-                @input="${e => set(e.target.value)}"
+                @input="${(e) => set(e.target.value)}"
                 ?required="${field.templateOptions.required}"
                 ?disabled="${field.templateOptions.disabled}"
                 ?readonly="${field.templateOptions.readonly}"
                 placeholder="YYYY-MM-DD">
             </input>
-        `
+        `;
   }
 
   renderSelectField(field, value, set, model) {
-    const options = field.templateOptions.options ?? []
+    const options = field.templateOptions.options ?? [];
     return html`
       <select
         id="${field.key}"
         class="form-control"
-        @change="${e => set(e.target.value)}"
-        @input="${e => set(e.target.value)}"
+        @change="${(e) => set(e.target.value)}"
+        @input="${(e) => set(e.target.value)}"
         ?required="${field.templateOptions.required}"
         ?disabled="${field.templateOptions.disabled}"
         ?readonly="${field.templateOptions.readonly}"
       >
         ${repeat(options, this.renderOption(value))}
       </select>
-    `
+    `;
   }
 
   /**
@@ -233,23 +229,23 @@ export class FieldRenderer {
    * @returns
    */
   renderDataListField(field, value, set, model) {
-    const options = field.templateOptions.options ?? []
+    const options = field.templateOptions.options ?? [];
     return html`
             <input class="form-control" id=${field.key} name=${field.key} 
                 list="${field.key}-datalist" 
                 ?required=${field.templateOptions.required}
                 ?disabled="${field.templateOptions.disabled}"
                 ?readonly="${field.templateOptions.readonly}"
-                @input=${e => set(e.target.value)} autocomplete="off">
+                @input=${(e) => set(e.target.value)} autocomplete="off">
             </input>            
             <datalist id="${field.key}-datalist">
                 ${repeat(options, this.renderOption(value))}
             </datalist>            
-        `
+        `;
   }
 
   renderOption(value) {
-    return option => html`
+    return (option) => html`
       <option
         value="${option.value}"
         ?selected="${option.value === value}"
@@ -257,6 +253,6 @@ export class FieldRenderer {
       >
         ${option.name}
       </option>
-    `
+    `;
   }
 }

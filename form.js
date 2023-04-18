@@ -1,6 +1,5 @@
 import { LitElement, html } from 'lit';
-import { property } from 'lit/decorators.js';
-import { FieldRenderer } from './FieldRenderer.js';
+import { FieldRenderer } from './field-renderer.js';
 
 function isGenericModel(model) {
   const gm = model;
@@ -13,13 +12,11 @@ function isFunction(fn) {
 
 export function isNumberField(field) {
   const numberTypes = ['decimal', 'double', 'integer', 'long'];
-  //@ts-ignore
   return numberTypes.includes(field.templateOptions.type);
 }
 
 export function isDateField(field) {
   const dateTypes = ['date', 'timestamp'];
-  //@ts-ignore
   return dateTypes.includes(field.templateOptions.type);
 }
 
@@ -27,7 +24,7 @@ function isUndefined(value) {
   return typeof value === 'undefined';
 }
 
-export class LitFormlyForm extends LitElement {
+export class TForm extends LitElement {
   // static styles = css`
   //     :host {
   //       input:invalid {
@@ -39,11 +36,20 @@ export class LitFormlyForm extends LitElement {
   //     }
   //     `;
 
-  @property({ type: Array, attribute: false })
-  contract = null;
+  static properties = {
+    contract: { type: Array, attribute: false },
+    _value: { type: Object, attribute: false },
+    renderer: { type: Object, attribute: false },
+  };
 
-  @property({ type: Object, attribute: false })
-  _value = {};
+  constructor() {
+    super();
+    this.contract = null;
+    this.renderer = new FieldRenderer();
+    this.errors = {};
+    this._initialValue = {};
+    this._value = {};
+  }
 
   get value() {
     return this._value;
@@ -56,14 +62,6 @@ export class LitFormlyForm extends LitElement {
     this._value = val;
     this.requestUpdate('value', oldValue);
   }
-
-  @property({ type: Object, attribute: false })
-  renderer = new FieldRenderer();
-
-  /** error object for all fields indexed by their id */
-  errors = {};
-
-  _initialValue = {};
 
   createRenderRoot() {
     return this; //no shadow root
@@ -86,10 +84,6 @@ export class LitFormlyForm extends LitElement {
   }
 
   _formTemplate(c) {
-    //@change="${this.formValueUpdated}"
-    //@formchange=${(e:Event)=>console.log(e)}
-    //@invalid=${(e:Event)=>console.log(e)}
-    //@forminput=${(e:Event)=>console.log(e)}
     return html`
       <form @input=${this.formValueUpdated} @submit="${this._onSubmit}">
         ${this._fieldsetTemplate(c)}
@@ -139,7 +133,6 @@ export class LitFormlyForm extends LitElement {
           )})`
         );
         this._setModelValue(field.key, newValue);
-        //this.validate(this.querySelector(`#${field.key}`) as HTMLInputElement);
 
         this.requestUpdate();
       }
@@ -303,3 +296,5 @@ export class LitFormlyForm extends LitElement {
     return false;
   }
 }
+
+customElements.define('t-form', TForm);
