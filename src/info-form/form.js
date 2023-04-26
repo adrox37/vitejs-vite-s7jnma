@@ -25,17 +25,6 @@ function isUndefined(value) {
 }
 
 export class TForm extends LitElement {
-  // static styles = css`
-  //     :host {
-  //       input:invalid {
-  //         border-color: red;
-  //       }
-  //     }
-  //     input:invalid {
-  //       border-color: red;
-  //     }
-  //     `;
-
   static properties = {
     contract: { type: Array, attribute: false },
     _value: { type: Object, attribute: false },
@@ -87,6 +76,7 @@ export class TForm extends LitElement {
     return html`
       <form @input=${this.formValueUpdated} @submit="${this._onSubmit}">
         ${this._fieldsetTemplate(c)}
+        <button>Submit</button>
       </form>
     `;
   }
@@ -103,6 +93,7 @@ export class TForm extends LitElement {
     const propValue = this._getPropertyValue(field);
     const set = this._createModelValueSetter(field);
     const errorMsg = this.errors[field.key];
+    console.log('errorMsg', errorMsg);
     return this.renderer.renderField(
       field,
       propValue,

@@ -152,7 +152,7 @@ class TInfo extends LitElement {
 
   firstUpdated() {
     super.firstUpdated();
-    console.log(!this.count)
+    console.log(!this.count);
   }
 
   _handleSubmit() {
