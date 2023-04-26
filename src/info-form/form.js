@@ -92,7 +92,6 @@ export class TForm extends LitElement {
   }
 
   _fieldsetTemplate(c) {
-    console.log('Rendering', c);
     return html`
       <div class="fieldset">
         ${(c || []).map((field) => this._fieldWrapperTemplate(field))}
@@ -102,11 +101,8 @@ export class TForm extends LitElement {
 
   _fieldWrapperTemplate(field) {
     const propValue = this._getPropertyValue(field);
-    console.log('propValue', propValue);
     const set = this._createModelValueSetter(field);
     const errorMsg = this.errors[field.key];
-    console.log('errorMsg', errorMsg);
-    console.log(this.value);
     return this.renderer.renderField(
       field,
       propValue,
@@ -200,6 +196,7 @@ export class TForm extends LitElement {
   }
 
   _getPropertyValue(field) {
+    console.log('fff', field);
     let value = this._getModelValue(field.key);
 
     value = this.unwrapFieldValue(field, value);

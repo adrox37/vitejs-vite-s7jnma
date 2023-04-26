@@ -6,9 +6,7 @@ import { repeat } from 'lit/directives/repeat.js';
 export class FieldRenderer {
   renderField(field, value, set, errorMsg = null, model) {
     const labelTemplate = this.labelTemplate(field);
-
     const fieldTemplate = this.fieldTemplate(field, value, set, model);
-
     const errorClass = { 'has-error': errorMsg != null };
 
     return html`

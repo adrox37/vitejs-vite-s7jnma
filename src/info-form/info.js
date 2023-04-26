@@ -143,7 +143,7 @@ class TInfo extends LitElement {
   constructor() {
     super();
     this.name = 'MemberInfo';
-    this.count = 0;
+    this.count = '';
   }
 
   connectedCallback() {
@@ -152,6 +152,7 @@ class TInfo extends LitElement {
 
   firstUpdated() {
     super.firstUpdated();
+    console.log(!this.count)
   }
 
   _handleSubmit() {
