@@ -41,10 +41,12 @@ export class TForm extends LitElement {
   }
 
   get value() {
+    console.log('2 get val', this._value);
     return this._value;
   }
 
   set value(val) {
+    console.log('1 set val', val);
     //reset errors on model change
     this.errors = {};
     const oldValue = this._value;
@@ -52,11 +54,13 @@ export class TForm extends LitElement {
     this.requestUpdate('value', oldValue);
   }
 
-  createRenderRoot() {
-    return this; //no shadow root
-  }
+  // createRenderRoot() {
+  //   console.log('createRenderRoot');
+  //   return this; //no shadow root
+  // }
 
   render() {
+    console.log('4 render...');
     if (this.contract) {
       return this._formTemplate(this.contract);
     }
@@ -65,6 +69,7 @@ export class TForm extends LitElement {
   }
 
   firstUpdated() {
+    console.log('first updated...');
     try {
       this._initialValue = JSON.parse(JSON.stringify(this.value));
     } catch (e) {
@@ -73,6 +78,7 @@ export class TForm extends LitElement {
   }
 
   _formTemplate(c) {
+    console.log('5 formTemplate');
     return html`
       <form @input=${this.formValueUpdated} @submit="${this._onSubmit}">
         ${this._fieldsetTemplate(c)}
@@ -82,6 +88,7 @@ export class TForm extends LitElement {
   }
 
   _fieldsetTemplate(c) {
+    console.log('6 fieldSetTemplate');
     return html`
       <div class="fieldset">
         ${(c || []).map((field) => this._fieldWrapperTemplate(field))}
@@ -90,6 +97,7 @@ export class TForm extends LitElement {
   }
 
   _fieldWrapperTemplate(field) {
+    console.log('7 _fieldWrapperTemplate', field);
     const propValue = this._getPropertyValue(field);
     const set = this._createModelValueSetter(field);
     const errorMsg = this.errors[field.key];
@@ -108,6 +116,7 @@ export class TForm extends LitElement {
    * @param field
    */
   _createModelValueSetter(field) {
+    console.log('_createModelValueSetter', field);
     return (fieldInput) => {
       let newValue = fieldInput;
 
@@ -130,18 +139,24 @@ export class TForm extends LitElement {
   }
 
   _getModelValue(name) {
+    console.log('9 _getModelValue', name);
     if (isGenericModel(this.value)) {
+      console.log('get isGenericModel', this.value.get(name));
       return this.value.get(name);
     } else {
+      console.log('get else', this.value[name]);
       return this.value[name];
     }
   }
 
   _setModelValue(name, value) {
+    console.log('_setModelValue', name, value);
     if (isGenericModel(this.value)) {
-      this.value.set(name, value);
+      console.log('set isGenericModel', this.value.set(name, value));
+      return this.value.set(name, value);
     } else {
-      this.value[name] = value;
+      console.log('set else', value);
+      return (this.value[name] = value);
     }
   }
 
@@ -152,6 +167,7 @@ export class TForm extends LitElement {
    * @returns
    */
   unwrapFieldValue(field, value) {
+    console.log('unwrapFieldValue', field, value);
     if (isNumberField(field)) {
       return value;
     }
@@ -169,6 +185,7 @@ export class TForm extends LitElement {
    * @returns
    */
   wrapFieldValue(field, value) {
+    console.log('wrap FV', field, value);
     if (isNumberField(field)) {
       if (isUndefined(value)) {
         return null;
@@ -187,7 +204,7 @@ export class TForm extends LitElement {
   }
 
   _getPropertyValue(field) {
-    console.log('fff', field);
+    console.log('8 get prop', field);
     let value = this._getModelValue(field.key);
 
     value = this.unwrapFieldValue(field, value);
@@ -204,11 +221,13 @@ export class TForm extends LitElement {
    * Reset to initial value
    */
   async reset() {
+    console.log('reset');
     this.value = this._initialValue;
     await this.requestUpdate();
   }
 
   submit() {
+    console.log('submit');
     this.dispatchEvent(
       new CustomEvent('submit', {
         detail: {
@@ -221,12 +240,13 @@ export class TForm extends LitElement {
   async formValueUpdated(e) {
     const input = e.target;
     if (input.id) {
-      console.log('Updated input', input.id);
+      console.log('form val Updated input', input.id);
       const valid = this.validate(input);
     }
   }
 
   validate(el) {
+    console.log('validate', el);
     const validity = el.validity;
     const valid = validity.valid;
     if (valid) {
@@ -254,6 +274,7 @@ export class TForm extends LitElement {
   }
 
   getErrorMessage(validity) {
+    console.log('getErrorMsg', validity);
     if (validity.patternMismatch) {
       return 'Pattern mismatch!';
     } else if (validity.valueMissing) {
@@ -278,10 +299,12 @@ export class TForm extends LitElement {
   }
 
   isValid() {
+    console.log('isValid');
     return Object.keys(this.errors).length == 0;
   }
 
   _onSubmit(e) {
+    console.log('_onSubmit');
     this.submit();
     e.preventDefault();
     return false;

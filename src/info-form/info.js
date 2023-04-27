@@ -37,93 +37,106 @@ const config = [
       required: true,
     },
   },
-  {
-    id: '2',
-    key: 'country',
-    type: 'select',
-    templateOptions: {
-      type: 'string',
-      label: 'Country',
-      options: countries,
-      required: false,
-    },
-  },
-  {
-    id: '2',
-    key: 'birthdate',
-    type: 'date',
-    templateOptions: {
-      type: 'timestamp',
-      label: 'Birthdate',
-      required: false,
-    },
-  },
-  {
-    id: 'notes_id',
-    key: 'notes',
-    type: 'input',
-    templateOptions: {
-      type: 'string',
-      label: 'Notes',
-      required: false,
-      minLength: 3,
-      maxLength: 5,
-      pattern: '[a-z]*',
-      placeholder: 'Insert some lowercase notes here (3-5 characters)',
-    },
-  },
-  {
-    id: 'checkbox_unchecked',
-    key: 'checkbox',
-    type: 'checkbox',
-    templateOptions: {
-      type: 'string',
-      label: 'Check me',
-      required: false,
-    },
-  },
-  {
-    id: 'checkbox_checked',
-    key: 'checkbox_checked',
-    type: 'checkbox',
-    templateOptions: {
-      type: 'string',
-      label: 'Checked',
-      required: false,
-    },
-  },
-  {
-    id: 'age',
-    key: 'age',
-    type: 'input',
-    templateOptions: {
-      type: 'integer',
-      label: 'Age <= 45',
-      required: false,
-      max: 45,
-    },
-  },
-  {
-    id: 'disabled',
-    key: 'disabled',
-    type: 'input',
-    templateOptions: {
-      label: 'Disabled',
-      disabled: true,
-      placeholder: 'This field is disabled',
-    },
-  },
-  {
-    id: 'readonly',
-    key: 'readonly',
-    type: 'input',
-    templateOptions: {
-      label: 'Readonly',
-      readonly: true,
-      placeholder: 'This field is readonly',
-    },
-  },
 ];
+
+// const config = [
+//   {
+//     id: '1',
+//     key: 'NAME',
+//     type: 'input',
+//     templateOptions: {
+//       type: 'string',
+//       label: 'Name',
+//       required: true,
+//     },
+//   },
+//   {
+//     id: '2',
+//     key: 'country',
+//     type: 'select',
+//     templateOptions: {
+//       type: 'string',
+//       label: 'Country',
+//       options: countries,
+//       required: false,
+//     },
+//   },
+//   {
+//     id: '2',
+//     key: 'birthdate',
+//     type: 'date',
+//     templateOptions: {
+//       type: 'timestamp',
+//       label: 'Birthdate',
+//       required: false,
+//     },
+//   },
+//   {
+//     id: 'notes_id',
+//     key: 'notes',
+//     type: 'input',
+//     templateOptions: {
+//       type: 'string',
+//       label: 'Notes',
+//       required: false,
+//       minLength: 3,
+//       maxLength: 5,
+//       pattern: '[a-z]*',
+//       placeholder: 'Insert some lowercase notes here (3-5 characters)',
+//     },
+//   },
+//   {
+//     id: 'checkbox_unchecked',
+//     key: 'checkbox',
+//     type: 'checkbox',
+//     templateOptions: {
+//       type: 'string',
+//       label: 'Check me',
+//       required: false,
+//     },
+//   },
+//   {
+//     id: 'checkbox_checked',
+//     key: 'checkbox_checked',
+//     type: 'checkbox',
+//     templateOptions: {
+//       type: 'string',
+//       label: 'Checked',
+//       required: false,
+//     },
+//   },
+//   {
+//     id: 'age',
+//     key: 'age',
+//     type: 'input',
+//     templateOptions: {
+//       type: 'integer',
+//       label: 'Age <= 45',
+//       required: false,
+//       max: 45,
+//     },
+//   },
+//   {
+//     id: 'disabled',
+//     key: 'disabled',
+//     type: 'input',
+//     templateOptions: {
+//       label: 'Disabled',
+//       disabled: true,
+//       placeholder: 'This field is disabled',
+//     },
+//   },
+//   {
+//     id: 'readonly',
+//     key: 'readonly',
+//     type: 'input',
+//     templateOptions: {
+//       label: 'Readonly',
+//       readonly: true,
+//       placeholder: 'This field is readonly',
+//     },
+//   },
+// ];
 
 const value = {
   NAME: 'Kafka',
@@ -152,11 +165,11 @@ class TInfo extends LitElement {
 
   firstUpdated() {
     super.firstUpdated();
-    console.log(!this.count);
+    // console.log(!this.count);
   }
 
   _handleSubmit() {
-    console.log(this.getNodeElement());
+    // console.log(this.getNodeElement());
   }
 
   _renderView() {}
