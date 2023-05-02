@@ -1,29 +1,6 @@
 import { LitElement, html } from 'lit';
 import { FieldRenderer } from './field-renderer.js';
 
-function isGenericModel(model) {
-  const gm = model;
-  return isFunction(gm.get) && isFunction(gm.set);
-}
-
-function isFunction(fn) {
-  return fn && {}.toString.call(fn) === '[object Function]';
-}
-
-export function isNumberField(field) {
-  const numberTypes = ['decimal', 'double', 'integer', 'long'];
-  return numberTypes.includes(field.templateOptions.type);
-}
-
-export function isDateField(field) {
-  const dateTypes = ['date', 'timestamp'];
-  return dateTypes.includes(field.templateOptions.type);
-}
-
-function isUndefined(value) {
-  return typeof value === 'undefined';
-}
-
 export class TForm extends LitElement {
   static properties = {
     contract: { type: Array, attribute: false },
@@ -118,13 +95,14 @@ export class TForm extends LitElement {
   _createModelValueSetter(field) {
     console.log('_createModelValueSetter', field);
     return (fieldInput) => {
+      console.log('fieldInput:', fieldInput);
       let newValue = fieldInput;
 
       // if (field.valueDecorator && typeof field.valueDecorator.wrap === 'function') {
       //   newValue = field.valueDecorator.wrap(newValue)
       // }
       newValue = this.wrapFieldValue(field, newValue);
-
+      console.log('newValue', newValue);
       if (this._getModelValue(field.key) !== newValue) {
         console.log(
           `Setting value ${newValue} (old value ${this._getModelValue(
@@ -140,7 +118,7 @@ export class TForm extends LitElement {
 
   _getModelValue(name) {
     console.log('9 _getModelValue', name);
-    if (isGenericModel(this.value)) {
+    if (this.renderer.isGenericModel(this.value)) {
       console.log('get isGenericModel', this.value.get(name));
       return this.value.get(name);
     } else {
@@ -151,7 +129,7 @@ export class TForm extends LitElement {
 
   _setModelValue(name, value) {
     console.log('_setModelValue', name, value);
-    if (isGenericModel(this.value)) {
+    if (this.renderer.isGenericModel(this.value)) {
       console.log('set isGenericModel', this.value.set(name, value));
       return this.value.set(name, value);
     } else {
@@ -168,11 +146,11 @@ export class TForm extends LitElement {
    */
   unwrapFieldValue(field, value) {
     console.log('unwrapFieldValue', field, value);
-    if (isNumberField(field)) {
+    if (this.renderer.isNumberField(field)) {
       return value;
     }
 
-    if (value === null || isUndefined(value)) {
+    if (value === null || this.renderer.isUndefined(value)) {
       return '';
     }
     return value;
@@ -186,7 +164,7 @@ export class TForm extends LitElement {
    */
   wrapFieldValue(field, value) {
     console.log('wrap FV', field, value);
-    if (isNumberField(field)) {
+    if (this.renderer.isNumberField(field)) {
       if (isUndefined(value)) {
         return null;
       }
@@ -238,6 +216,7 @@ export class TForm extends LitElement {
   }
 
   async formValueUpdated(e) {
+    console.log('formValueUpdated', e);
     const input = e.target;
     if (input.id) {
       console.log('form val Updated input', input.id);
@@ -248,7 +227,9 @@ export class TForm extends LitElement {
   validate(el) {
     console.log('validate', el);
     const validity = el.validity;
+    console.log('validity', validity);
     const valid = validity.valid;
+    console.log('valid', valid);
     if (valid) {
       //clear previous error (if any)
       if (this.errors[el.id]) {

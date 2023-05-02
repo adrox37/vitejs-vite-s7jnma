@@ -9,8 +9,8 @@
   <body>
     <!-- info form. -->
 
-    <script type="module" src="src/info-form/info.js"></script>
-    <t-info></t-info>
+    <!-- <script type="module" src="src/info-form/info.js"></script>
+    <t-info></t-info> -->
 
     <!-- fetch-data. -->
     <!--    
@@ -23,8 +23,73 @@
 
     <!-- <script type="module" src="src/informer/app-form.js"></script>
     <app-form></app-form> -->
-<!-- 
+    <!-- 
     <script type="module" src="src/misson/m-form.js"></script>
     <m-form></m-form> -->
+
+    <!-- former -->
+    <script defer src="/src/former/index.js" type="module"></script>
+    <form id="form">
+      <lit-control name="lit-control" required></lit-control>
+
+      <div class="buttons">
+        <button type="reset">Reset</button>
+        <button type="submit">Submit</button>
+      </div>
+    </form>
+
+    <script>
+      const form = document.getElementById('form');
+      const litControl = document.querySelector('lit-control');
+
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const data = new FormData(event.target);
+        console.log({
+          litControl: data.get('lit-control'),
+        });
+      });
+
+      litControl.addEventListener('input', (event) => {
+        if (event.target.value === 'fooo') {
+          event.target.error = 'That is a silly response';
+        }
+      });
+    </script>
+
+    <style>
+      body {
+        background: ButtonFace;
+      }
+      form {
+        background: #ffffff;
+        border-radius: 4px;
+        display: flex;
+        flex-flow: column;
+        gap: 24px;
+        margin: 16px auto;
+        padding: 16px;
+        max-width: 400px;
+      }
+      form h1 {
+        font-family: Helvetica, Arial, sans-serif;
+        margin: 0;
+      }
+      form button {
+        font-size: 16px;
+        padding: 4px 8px;
+      }
+      form .buttons {
+        align-self: flex-end;
+        display: flex;
+        gap: 8px;
+      }
+      .form-field {
+        align-items: center;
+        display: flex;
+        font-family: Arial, Helvetica, sans-serif;
+        gap: 8px;
+      }
+    </style>
   </body>
 </html>

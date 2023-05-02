@@ -139,7 +139,7 @@ const config = [
 // ];
 
 const value = {
-  NAME: 'Kafka',
+  NAME: 'Tester',
   country: '0',
   birthdate: '1883-07-03',
   checkbox_checked: true,

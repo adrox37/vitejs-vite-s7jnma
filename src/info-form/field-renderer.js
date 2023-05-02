@@ -3,7 +3,31 @@ import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { repeat } from 'lit/directives/repeat.js';
 
+import './input.js';
 export class FieldRenderer {
+  isGenericModel(model) {
+    const gm = model;
+    return this.isFunction(gm.get) && this.isFunction(gm.set);
+  }
+
+  isFunction(fn) {
+    return fn && {}.toString.call(fn) === '[object Function]';
+  }
+
+  isNumberField(field) {
+    const numberTypes = ['decimal', 'double', 'integer', 'long'];
+    return numberTypes.includes(field.type);
+  }
+
+  isDateField(field) {
+    const dateTypes = ['date', 'timestamp'];
+    return dateTypes.includes(field.type);
+  }
+
+  isUndefined(value) {
+    return typeof value === 'undefined';
+  }
+
   renderField(field, value, set, errorMsg = null, model) {
     const labelTemplate = this.labelTemplate(field);
     const fieldTemplate = this.fieldTemplate(field, value, set, model);
@@ -137,7 +161,7 @@ export class FieldRenderer {
     // otherwise override it
     // Previoulsy I used .value="${value||''}" but didn't work for number 0 etc
     return html`
-            <input id="${field.key}" 
+            <t-input id="${field.key}" 
               type="${type}" 
               class="form-control"  
               name="${field.key}"
@@ -154,7 +178,7 @@ export class FieldRenderer {
               ?disabled="${field.templateOptions.disabled}"
               ?readonly="${field.templateOptions.readonly}"
               >
-            </input>
+            </t-input>
 
             `;
   }
