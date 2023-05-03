@@ -3,7 +3,7 @@ import { live } from 'lit/directives/live.js';
 import { FormControlMixin } from './src/FormControlMixin.js';
 import { requiredValidator, programmaticValidator } from './src/validators';
 
-import '../info-form/input.js';
+import './c-input.js';
 
 export class LitControl extends FormControlMixin(LitElement) {
   static properties = {
@@ -30,12 +30,12 @@ export class LitControl extends FormControlMixin(LitElement) {
 
   render() {
     return html`
-      <t-input 
+      <c-input 
         label="Test Input"
         required
        
         >
-        <t-input>
+        </c-input>
     `;
   }
 
