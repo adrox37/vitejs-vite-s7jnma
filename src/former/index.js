@@ -1,1 +1,1 @@
-import './lit-control';
+import './demo-test.js';

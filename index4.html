@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <title>FormControl demo page</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0"
+    />
+    <meta name="description" content="FormControl demo page" />
+    <meta charset="UTF-8" />
+    <link href="src/former/page.css" rel="stylesheet" />
+  </head>
+  <body>
+    <form id="form">
+      <h1>FormControlMixin demo</h1>
+
+      <complex-demo name="complex-demo" minlength="5" required pattern=".*lit$">
+        Test
+      </complex-demo>
+
+      <!-- <div class="form-field">
+        <label for="switch">Switch</label>
+        <demo-switch id="switch" name="switch" value="switch-on" checked>
+        </demo-switch>
+      </div>
+
+      <div class="form-field">
+        <async-validator name="async" required></async-validator>
+      </div> -->
+
+      <div class="buttons">
+        <button type="reset">Reset</button>
+        <button type="submit">Submit</button>
+      </div>
+    </form>
+
+    <script src="src/former/page.js" type="module"></script>
+    <script src="src/former/index.js" type="module"></script>
+  </body>
+</html>

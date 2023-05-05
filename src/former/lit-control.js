@@ -52,3 +52,20 @@ export class LitControl extends FormControlMixin(LitElement) {
 }
 
 customElements.define('lit-control', LitControl);
+
+const form = document.getElementById('form');
+const litControl = document.querySelector('lit-control');
+
+form.addEventListener('submit', (event) => {
+  event.preventDefault();
+  const data = new FormData(event.target);
+  console.log({
+    litControl: data.get('lit-control'),
+  });
+});
+
+litControl.addEventListener('input', (event) => {
+  if (event.target.value === 'fooo') {
+    event.target.error = 'That is a silly response';
+  }
+});
