@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat</title>
+    <script type="module" src="src/chat.js" async></script>
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+      }
+      :not(:defined) {
+        opacity: 0;
+      }
+      do-chat {
+        height: 100%;
+      }
+    </style>
+  </head>
+
+  <body>
+    <do-chat channel="serious-talk" me="daniel">
+      <do-msg from="daniel" datetime="2020-01-01T12:34:59Z"> Hola! 😄 </do-msg>
+      <do-msg from="bob" datetime="2020-01-01T12:34:56Z">
+        Hello! :) I'm Bob.
+      </do-msg>
+
+      <do-dude name="daniel" slot="people">Daniel</do-dude>
+      <do-dude name="bob" slot="people">Bob</do-dude>
+
+      <form slot="actions">
+        <do-msg-field>
+          <button>send</button>
+        </do-msg-field>
+      </form>
+    </do-chat>
+
+    <script type="module">
+      const chan = new BroadcastChannel('serious-talk');
+      chan.addEventListener('message', ({ data }) => console.log(data));
+      addEventListener('serious-talk', ({ detail: msg }) =>
+        console.log({ ...msg })
+      );
+    </script>
+  </body>
+</html>
